@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калории Юрича</title>
+
+<style>
+body{
+font-family:Arial,sans-serif;
+background:#111;
+color:#fff;
+padding:20px;
+max-width:600px;
+margin:auto;
+}
+
+input,button{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:none;
+border-radius:10px;
+font-size:16px;
+}
+
+input{
+background:#222;
+color:white;
+}
+
+button{
+background:#00c853;
+color:white;
+font-weight:bold;
+}
+
+.card{
+background:#1e1e1e;
+padding:15px;
+border-radius:12px;
+margin-top:15px;
+}
+
+h1{
+text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🍗 Калории Юрича</h1>
+
+<input id="food" placeholder="Продукт">
+<input id="calories" type="number" placeholder="Калории">
+
+<button onclick="addFood()">Добавить</button>
+
+<div class="card">
+<h3>Сегодня съедено:</h3>
+<div id="list"></div>
+<h2 id="total">Всего: 0 ккал</h2>
+</div>
+
+<script>
+
+let foods=[];
+let total=0;
+
+function addFood(){
+
+const food=document.getElementById("food").value;
+const calories=parseInt(document.getElementById("calories").value);
+
+if(!food || !calories)return;
+
+foods.push({food,calories});
+
+total+=calories;
+
+document.getElementById("list").innerHTML=
+foods.map(x=>`<p>${x.food} - ${x.calories} ккал</p>`).join("");
+
+document.getElementById("total").innerText=
+`Всего: ${total} ккал`;
+
+document.getElementById("food").value="";
+document.getElementById("calories").value="";
+}
+
+</script>
+
+</body>
+</html>
