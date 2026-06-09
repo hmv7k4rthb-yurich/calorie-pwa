@@ -1,0 +1,206 @@
+*{
+    box-sizing:border-box;
+}
+
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:#0f0f0f;
+    color:#ffffff;
+    margin:0;
+    padding:15px;
+    max-width:850px;
+    margin:auto;
+}
+
+h1{
+    text-align:center;
+    font-size:36px;
+    margin:15px 0;
+}
+
+h2{
+    margin-top:0;
+}
+
+.card{
+    background:#1c1c1e;
+    padding:16px;
+    border-radius:20px;
+    margin-bottom:15px;
+}
+
+.row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.row3{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:10px;
+}
+
+input,
+select,
+textarea,
+button{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:14px;
+    font-size:16px;
+    margin-top:6px;
+}
+
+input,
+select,
+textarea{
+    background:#2a2a2c;
+    color:white;
+}
+
+button{
+    background:#00c853;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+}
+
+button:active{
+    transform:scale(0.98);
+}
+
+.gray{
+    background:#333333;
+}
+
+.red{
+    background:#c62828;
+}
+
+.blue{
+    background:#1565c0;
+}
+
+.orange{
+    background:#ef6c00;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.stat{
+    background:#29292b;
+    border-radius:14px;
+    padding:12px;
+}
+
+.big{
+    font-size:28px;
+    font-weight:800;
+}
+
+.small{
+    color:#aaaaaa;
+    font-size:13px;
+}
+
+.progress{
+    height:16px;
+    background:#333333;
+    border-radius:999px;
+    overflow:hidden;
+}
+
+.bar{
+    height:100%;
+    width:0%;
+    background:#00c853;
+}
+
+.food{
+    background:#29292b;
+    border-radius:14px;
+    padding:12px;
+    margin-top:10px;
+}
+
+.result{
+    background:#29292b;
+    border-radius:14px;
+    padding:12px;
+    margin-top:10px;
+}
+
+.template{
+    background:#29292b;
+    border-radius:14px;
+    padding:12px;
+    margin-top:10px;
+}
+
+.pill{
+    display:inline-block;
+    background:#333;
+    border-radius:999px;
+    padding:8px 12px;
+    margin:3px;
+    font-size:13px;
+}
+
+.pill:hover{
+    background:#00c853;
+}
+
+img{
+    width:100%;
+    border-radius:14px;
+    margin-top:10px;
+}
+
+canvas{
+    width:100%;
+    background:#151515;
+    border-radius:14px;
+}
+
+#coach{
+    line-height:1.7;
+}
+
+#results{
+    max-height:350px;
+    overflow-y:auto;
+}
+
+#list{
+    max-height:700px;
+    overflow-y:auto;
+}
+
+hr{
+    border:none;
+    border-top:1px solid #333;
+    margin:15px 0;
+}
+
+@media(max-width:700px){
+
+    .row,
+    .row3,
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    h1{
+        font-size:30px;
+    }
+
+    .big{
+        font-size:24px;
+    }
+}
