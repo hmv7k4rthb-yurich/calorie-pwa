@@ -2,273 +2,38 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>Калории Юрича</title>
-<style>
-*{box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,Arial,sans-serif;background:#0f0f0f;color:#fff;margin:0;padding:16px;max-width:760px;margin:auto}
-h1{text-align:center;font-size:36px}
-h2{margin-top:24px}
-.card{background:#1c1c1e;border-radius:18px;padding:16px;margin:14px 0}
-input,select,button,textarea{width:100%;padding:14px;margin:6px 0;border:0;border-radius:14px;font-size:16px}
-input,select,textarea{background:#2a2a2c;color:#fff}
-button{background:#00c853;color:#fff;font-weight:800}
-button.gray{background:#333}
-button.red{background:#c62828}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.stat{background:#29292b;border-radius:14px;padding:12px}
-.big{font-size:28px;font-weight:900}
-.small{color:#aaa;font-size:13px}
-.progress{height:16px;background:#333;border-radius:99px;overflow:hidden}
-.bar{height:100%;background:#00c853;width:0%}
-.food{background:#29292b;padding:12px;border-radius:14px;margin:8px 0}
-img{max-width:100%;border-radius:14px;margin-top:8px}
-canvas{width:100%;background:#141414;border-radius:14px}
-</style>
+
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1>🍗 Калории Юрича</h1>
+<h1>🍗 Калории Юрича 3.0</h1>
 
 <div class="card">
-<h2>🎯 Цель дня</h2>
-<div class="row">
-<input id="goal" type="number" placeholder="Ккал в день">
-<input id="proteinGoal" type="number" placeholder="Белок г">
-</div>
-<button onclick="saveSettings()">Сохранить цель</button>
-<p class="small">Рекомендованный старт: 2500 ккал и 180 г белка.</p>
-</div>
+<h2>🚧 Идёт большая модернизация</h2>
 
-<div class="card">
-<h2>➕ Добавить еду</h2>
-<input id="food" placeholder="Название продукта">
-<div class="row">
-<input id="grams" type="number" placeholder="Граммы">
-<select id="preset" onchange="usePreset()">
-<option value="">База продуктов</option>
-<option value="chicken">Курица грудка</option>
-<option value="rice">Рис варёный</option>
-<option value="buckwheat">Гречка варёная</option>
-<option value="egg">Яйцо</option>
-<option value="banana">Банан</option>
-<option value="bread">Хлеб</option>
-<option value="potato">Картошка</option>
-<option value="pasta">Макароны</option>
-<option value="beef">Говядина</option>
-<option value="cottage">Творог 5%</option>
-<option value="milk">Молоко</option>
-<option value="apple">Яблоко</option>
-</select>
+<p>
+Юрич собирает самый народный счётчик калорий.
+</p>
+
+<p>
+foods.js ✅<br>
+style.css ✅<br>
+app.js ✅<br>
+</p>
+
+<p>
+Следующий этап: перенос всей логики в app.js.
+</p>
+
 </div>
 
-<div class="row">
-<input id="calPer100" type="number" placeholder="Ккал на 100г">
-<input id="pPer100" type="number" placeholder="Белки/100г">
-</div>
-<div class="row">
-<input id="fPer100" type="number" placeholder="Жиры/100г">
-<input id="cPer100" type="number" placeholder="Угли/100г">
-</div>
+<script src="foods.js"></script>
+<script src="app.js"></script>
 
-<input id="photo" type="file" accept="image/*" capture="environment">
-<button onclick="addFood()">Добавить</button>
-</div>
-
-<div class="card">
-<h2>📊 Сегодня</h2>
-<div class="stats">
-<div class="stat"><div class="small">Калории</div><div class="big" id="totalCal">0</div></div>
-<div class="stat"><div class="small">Осталось</div><div class="big" id="leftCal">0</div></div>
-<div class="stat"><div class="small">Белки</div><div class="big" id="totalP">0г</div></div>
-<div class="stat"><div class="small">Вода</div><div class="big" id="water">0 л</div></div>
-</div>
-<br>
-<div class="progress"><div id="bar" class="bar"></div></div>
-<button onclick="addWater()">+ 250 мл воды</button>
-</div>
-
-<div class="card">
-<h2>🍽️ Список еды</h2>
-<div id="list"></div>
-<button class="red" onclick="clearDay()">Очистить день</button>
-</div>
-
-<div class="card">
-<h2>⚖️ Вес</h2>
-<input id="weight" type="number" placeholder="Вес сегодня">
-<button onclick="saveWeight()">Записать вес</button>
-<canvas id="chart" height="180"></canvas>
-</div>
-
-<div class="card">
-<h2>🧮 Расчёт нормы</h2>
-<div class="row">
-<input id="height" type="number" placeholder="Рост см" value="188">
-<input id="age" type="number" placeholder="Возраст" value="25">
-</div>
-<input id="calcWeight" type="number" placeholder="Вес кг" value="98">
-<select id="activity">
-<option value="1.2">Мало движения</option>
-<option value="1.375">Лёгкая активность</option>
-<option value="1.55" selected>Зал/работа средне</option>
-<option value="1.725">Активный зверюга</option>
-</select>
-<button onclick="calcNorm()">Рассчитать</button>
-<p id="normResult"></p>
-</div>
-
-<script>
-const today = new Date().toISOString().slice(0,10);
-let data = JSON.parse(localStorage.getItem("calorieData") || "{}");
-if(!data[today]) data[today]={foods:[],water:0};
-let settings = JSON.parse(localStorage.getItem("settings") || '{"goal":2500,"proteinGoal":180}');
-let weights = JSON.parse(localStorage.getItem("weights") || "[]");
-
-const presets={
-chicken:["Курица грудка",165,31,3.6,0],
-rice:["Рис варёный",130,2.7,0.3,28],
-buckwheat:["Гречка варёная",110,3.6,1.1,21],
-egg:["Яйцо",155,13,11,1.1],
-banana:["Банан",89,1.1,0.3,23],
-bread:["Хлеб",250,8,3,49],
-potato:["Картошка",77,2,0.1,17],
-pasta:["Макароны",131,5,1.1,25],
-beef:["Говядина",250,26,15,0],
-cottage:["Творог 5%",121,17,5,1.8],
-milk:["Молоко",52,3,2.5,4.7],
-apple:["Яблоко",52,0.3,0.2,14]
-};
-
-function usePreset(){
-let v=document.getElementById("preset").value;
-if(!v)return;
-let p=presets[v];
-food.value=p[0]; calPer100.value=p[1]; pPer100.value=p[2]; fPer100.value=p[3]; cPer100.value=p[4];
-}
-
-function saveSettings(){
-settings.goal=+goal.value||2500;
-settings.proteinGoal=+proteinGoal.value||180;
-localStorage.setItem("settings",JSON.stringify(settings));
-render();
-}
-
-function addFood(){
-let g=+grams.value, cal=+calPer100.value, p=+pPer100.value, f=+fPer100.value, c=+cPer100.value;
-if(!food.value || !g || !cal)return alert("Заполни продукт, граммы и ккал на 100г");
-let item={
-name:food.value, grams:g,
-cal:Math.round(cal*g/100),
-p:Math.round(p*g/100), f:Math.round(f*g/100), c:Math.round(c*g/100),
-photo:""
-};
-let file=photo.files[0];
-if(file){
-let r=new FileReader();
-r.onload=e=>{item.photo=e.target.result; pushFood(item)};
-r.readAsDataURL(file);
-}else pushFood(item);
-}
-
-function pushFood(item){
-data[today].foods.push(item);
-save();
-food.value=grams.value=calPer100.value=pPer100.value=fPer100.value=cPer100.value="";
-photo.value="";
-render();
-}
-
-function addWater(){
-data[today].water += 0.25;
-save(); render();
-}
-
-function clearDay(){
-if(confirm("Точно очистить день?")){
-data[today]={foods:[],water:0};
-save(); render();
-}
-}
-
-function saveWeight(){
-if(!weight.value)return;
-weights.push({date:today,weight:+weight.value});
-localStorage.setItem("weights",JSON.stringify(weights));
-weight.value="";
-drawChart();
-}
-
-function calcNorm(){
-let w=+calcWeight.value,h=+height.value,a=+age.value,act=+activity.value;
-let bmr=10*w+6.25*h-5*a+5;
-let maintain=Math.round(bmr*act);
-let cut=maintain-400;
-normResult.innerHTML=`Поддержание: <b>${maintain}</b> ккал<br>Похудение: <b>${cut}</b> ккал<br>Белок: <b>${Math.round(w*1.8)}</b> г`;
-}
-
-function save(){
-localStorage.setItem("calorieData",JSON.stringify(data));
-}
-
-function render(){
-goal.value=settings.goal;
-proteinGoal.value=settings.proteinGoal;
-let foods=data[today].foods;
-let cal=foods.reduce((s,x)=>s+x.cal,0);
-let p=foods.reduce((s,x)=>s+x.p,0);
-let f=foods.reduce((s,x)=>s+x.f,0);
-let c=foods.reduce((s,x)=>s+x.c,0);
-totalCal.innerText=cal;
-leftCal.innerText=settings.goal-cal;
-totalP.innerText=p+"г";
-water.innerText=data[today].water.toFixed(2)+" л";
-bar.style.width=Math.min(100,cal/settings.goal*100)+"%";
-list.innerHTML=foods.map((x,i)=>`
-<div class="food">
-<b>${x.name}</b><br>
-${x.grams}г • ${x.cal} ккал<br>
-Б ${x.p}г / Ж ${x.f}г / У ${x.c}г
-${x.photo?`<img src="${x.photo}">`:""}
-<button class="gray" onclick="delFood(${i})">Удалить</button>
-</div>`).join("") || "<p class='small'>Пока пусто. Холодильник дышит спокойно.</p>";
-drawChart();
-}
-
-function delFood(i){
-data[today].foods.splice(i,1);
-save(); render();
-}
-
-function drawChart(){
-let ctx=chart.getContext("2d");
-ctx.clearRect(0,0,chart.width,chart.height);
-chart.width=chart.offsetWidth;
-chart.height=180;
-if(weights.length<2)return;
-let arr=weights.slice(-14);
-let min=Math.min(...arr.map(x=>x.weight))-1;
-let max=Math.max(...arr.map(x=>x.weight))+1;
-ctx.strokeStyle="#00c853";
-ctx.lineWidth=3;
-ctx.beginPath();
-arr.forEach((x,i)=>{
-let px=i*(chart.width/(arr.length-1));
-let py=chart.height-((x.weight-min)/(max-min))*chart.height;
-if(i===0)ctx.moveTo(px,py); else ctx.lineTo(px,py);
-});
-ctx.stroke();
-ctx.fillStyle="#fff";
-ctx.font="12px Arial";
-arr.forEach((x,i)=>{
-let px=i*(chart.width/(arr.length-1));
-let py=chart.height-((x.weight-min)/(max-min))*chart.height;
-ctx.fillText(x.weight,px,py-6);
-});
-}
-
-render();
-</script>
 </body>
 </html>
