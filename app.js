@@ -236,7 +236,34 @@ function updateTotals() {
   if (!advice.length) advice.push("День идёт нормально. Держи курс.");
 
   $("coach").innerHTML = advice.map(a => "🧠 " + a).join("<br>");
+let grouped = {};
 
+records.forEach(r => {
+
+  if (!grouped[r.exercise]) {
+    grouped[r.exercise] = 0;
+  }
+
+  grouped[r.exercise] = Math.max(
+    grouped[r.exercise],
+    r.value
+  );
+
+});
+
+if ($("recordsBox")) {
+
+  $("recordsBox").innerHTML =
+    Object.entries(grouped)
+      .map(([name, val]) => `
+        <div class="food">
+          <b>${name}</b><br>
+          Лучший результат: ${val}
+        </div>
+      `)
+      .join("");
+
+}
   const meals = ["Завтрак", "Обед", "Ужин", "Перекус"];
 
   $("foodList").innerHTML = meals.map(meal => {
