@@ -103,7 +103,16 @@ function renderApp() {
       <p id="coach" class="small"></p>
       <button onclick="addWater()">+250 мл воды</button>
     </div>
+<div class="card">
+<h2>🏆 Рекорды</h2>
 
+<input id="exercise" placeholder="Жим лёжа">
+<input id="recordValue" type="number" placeholder="Вес или повторения">
+
+<button onclick="saveRecordUI()">Сохранить рекорд</button>
+
+<div id="recordsBox"></div>
+</div>
     <div class="card">
       <h2>🍽️ Еда</h2>
       <div id="foodList"></div>
@@ -262,3 +271,40 @@ function goToday() {
 }
 
 renderApp();
+let records = JSON.parse(localStorage.getItem("records") || "[]");
+
+function saveRecords(){
+  localStorage.setItem("records", JSON.stringify(records));
+}
+
+function addRecord(exercise, value){
+  records.push({
+    date:new Date().toISOString().slice(0,10),
+    exercise,
+    value:Number(value)
+  });
+
+  saveRecords();
+}
+
+function getBestRecord(exercise){
+  let arr = records.filter(x=>x.exercise===exercise);
+
+  if(!arr.length) return 0;
+
+  return Math.max(...arr.map(x=>x.value));
+}
+function saveRecordUI(){
+
+  let ex = $("exercise").value.trim();
+  let val = Number($("recordValue").value);
+
+  if(!ex || !val){
+    alert("Заполни упражнение и результат");
+    return;
+  }
+
+  addRecord(ex,val);
+
+  renderApp();
+}
